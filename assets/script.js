@@ -17,28 +17,60 @@ const slides = [
 	}
 ]
 
-const left = document.querySelector('#left');
-const right = document.querySelector('#right');
-const slider = document.querySelector('.carroussel-content');
-const nbImages = slider.childElementCount;
+// const left = document.querySelector('.left');
+// const right = document.querySelector('.right');
+// const dots = document.querySelectorAll(".dot")
+const imgElement = document.querySelector(".banner-img")
+const dotsContainer = document.querySelector(".dots");
+const leftArrow = document.querySelector(".left");
+const rightArrow = document.querySelector(".right");
+const tagLineElement = document.querySelector("p")
 
-let i = 0;
+let currentIndex = 0;
+// let i = 0;
 
-right.addEventListener('click',() => {
-	if(i < nbImages - 4)
-		i++;
-	else
-			i = 0;
-	
-	console.log(i);
-	slider.style.transform = 'tranlateY(-' + (i* 470) + 'px)';
+// right.addEventListener('click',() => {
+// 	console.log(i);
+// });
+
+// left.addEventListener('click',() => {
+// 		console.log(i);		
+// });
+
+
+slides.forEach((_, index) => {
+    const dot = document.createElement("span");
+    dot.classList.add("dot");
+    if (index === 0) dot.classList.add("dot_selected"); 
+    dot.addEventListener("click", () => goToSlide(index)); 
+    dotsContainer.appendChild(dot);
 });
 
-left.addEventListener('click',() => {
-	if(i > 0)
-		i--;
-	else
-		i =nbImages - 4;
-		console.log(i);
-		slider.style.transform = 'tranlateY(-' + (i* 470) + 'px)';
+function goToSlide(index) {
+    currentIndex = index;
+    imgElement.src = `./assets/images/slideshow/${slides[currentIndex].image}`; 
+    tagLineElement.innerHTML = slides[currentIndex].tagLine;
+    updateDots();
+}
+
+function updateDots() {
+    dots.forEach(dot => dot.classList.remove("dot_selected"));
+    dots[currentIndex].classList.add("dot_selected");
+}
+
+leftArrow.addEventListener("click", () => {
+    currentIndex = (currentIndex - 1 + slides.length) % slides.length;
+    goToSlide(currentIndex);
 });
+
+rightArrow.addEventListener("click", () => {
+    currentIndex = (currentIndex + 1) % slides.length;
+    goToSlide(currentIndex);
+});
+
+setInterval(() => {
+    currentIndex = (currentIndex + 1) % slides.length;
+    goToSlide(currentIndex);
+}, 3000);
+
+goToSlide(0);
