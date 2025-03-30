@@ -17,9 +17,6 @@ const slides = [
 	}
 ]
 
-// const left = document.querySelector('.left');
-// const right = document.querySelector('.right');
-// const dots = document.querySelectorAll(".dot")
 const imgElement = document.querySelector(".banner-img")
 const dotsContainer = document.querySelector(".dots");
 const leftArrow = document.querySelector(".left");
@@ -27,35 +24,33 @@ const rightArrow = document.querySelector(".right");
 const tagLineElement = document.querySelector("p")
 
 let currentIndex = 0;
-// let i = 0;
 
-// right.addEventListener('click',() => {
-// 	console.log(i);
-// });
-
-// left.addEventListener('click',() => {
-// 		console.log(i);		
-// });
-
-
-slides.forEach((_, index) => {
-    const dot = document.createElement("span");
-    dot.classList.add("dot");
-    if (index === 0) dot.classList.add("dot_selected"); 
-    dot.addEventListener("click", () => goToSlide(index)); 
-    dotsContainer.appendChild(dot);
-});
-
-function goToSlide(index) {
-    currentIndex = index;
-    imgElement.src = `./assets/images/slideshow/${slides[currentIndex].image}`; 
-    tagLineElement.innerHTML = slides[currentIndex].tagLine;
-    updateDots();
+// Crée un élément <span>
+for (let index = 0; index < slides.length; index++) {
+    let dot = document.createElement("span");
+    dot.className = "dot"; 
+	// Ajoute la classe "dot"
+    if (index === 0) { 
+        dot.classList.add("dot_selected"); 
+	// Ajoute la classe "dot_selected" au premier point
+    }
+    
+    dot.addEventListener("click", function() { 
+        goToSlide(index); 
+	// Va au slide correspondant quand on clique
+    });
+    
+    dotsContainer.appendChild(dot); 
+	// Ajoute le point dans le conteneur
 }
-
-function updateDots() {
-    dots.forEach(dot => dot.classList.remove("dot_selected"));
-    dots[currentIndex].classList.add("dot_selected");
+function goToSlide(index) {
+	let dots = document.querySelectorAll(".dot");
+	imgElement.src = `./assets/images/slideshow/${slides[index].image}`; 
+    tagLineElement.innerHTML = slides[index].tagLine;
+	for (let i = 0; i < dots.length; i++) {
+        dots[i].classList.remove("dot_selected");
+    }
+    dots[index].classList.add("dot_selected");
 }
 
 leftArrow.addEventListener("click", () => {
@@ -67,10 +62,4 @@ rightArrow.addEventListener("click", () => {
     currentIndex = (currentIndex + 1) % slides.length;
     goToSlide(currentIndex);
 });
-
-setInterval(() => {
-    currentIndex = (currentIndex + 1) % slides.length;
-    goToSlide(currentIndex);
-}, 3000);
-
 goToSlide(0);
