@@ -136,6 +136,14 @@ header {
 	right: 10px;
 }
 
+.left{
+	height: 90px;
+}
+
+.right{
+	height: 90px;
+}
+
 .slider-arrow{
 	cursor: pointer;
     width: 100%;

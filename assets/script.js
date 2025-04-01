@@ -17,11 +17,11 @@ const slides = [
 	}
 ]
 
-const imgElement = document.querySelector(".banner-img")
+let imgElement = document.querySelector(".banner-img")
 const dotsContainer = document.querySelector(".dots");
 const leftArrow = document.querySelector(".left");
 const rightArrow = document.querySelector(".right");
-const tagLineElement = document.querySelector("p")
+let tagLineElement = document.querySelector("p")
 
 let currentIndex = 0;
 
@@ -35,7 +35,7 @@ for (let index = 0; index < slides.length; index++) {
 	// Ajoute la classe "dot_selected" au premier point
     }
     
-    dot.addEventListener("click", function() { 
+    dot.addEventListener("click", function() {
         goToSlide(index); 
 	// Va au slide correspondant quand on clique
     });
@@ -62,4 +62,5 @@ rightArrow.addEventListener("click", () => {
     currentIndex = (currentIndex + 1) % slides.length;
     goToSlide(currentIndex);
 });
+
 goToSlide(0);
